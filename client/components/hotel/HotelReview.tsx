@@ -111,16 +111,25 @@ const HotelReview = ({ reviews, id, setShowModal }: any) => {
                             <textarea
                               defaultValue={review.review}
                               disabled={
-                                review.user._id === user?._id ? false : true
+                                review.user.user_id === user?.user_id
+                                  ? false
+                                  : true
                               }
                               className="text-black text-xl leading-relaxed flex-1 w-64 mr-2 border-none rounded w-full md:py-1 bg-inherit p-2 h-12 resize-none hover:resize"
                               onChange={handleChangeReview}
                             />
-                            {review.user._id === user?._id && (
+                            {review.user._id === user?.user_id && (
                               <>
-                                {reviewInput && <div onClick={() => handleUpdateReview(review._id)} className="cursor-pointer items-center inline-flex cursor-pointer opacity-0 group-hover:opacity-100 text-2xl absolute right-1/4 mt-2">
-                                  <CiEdit />
-                                </div>}
+                                {reviewInput && (
+                                  <div
+                                    onClick={() =>
+                                      handleUpdateReview(review.review_id)
+                                    }
+                                    className="cursor-pointer items-center inline-flex cursor-pointer opacity-0 group-hover:opacity-100 text-2xl absolute right-1/4 mt-2"
+                                  >
+                                    <CiEdit />
+                                  </div>
+                                )}
                                 <div
                                   onClick={() => handleDeleteReview(review._id)}
                                   className="cursor-pointer items-center inline-flex cursor-pointer opacity-0 group-hover:opacity-100 text-2xl absolute left-3/4 mt-2 ml-2"
