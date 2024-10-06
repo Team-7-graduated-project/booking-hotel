@@ -24,14 +24,15 @@ const UserSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+      default:
+        "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png",
     },
     country: {
       type: String,
     },
     city: {
       type: String,
-      trim: true
+      trim: true,
     },
     phone: {
       type: String,
@@ -42,9 +43,10 @@ const UserSchema = new mongoose.Schema(
     gender: {
       type: Boolean, // True is male, false is female
     },
-    isAdmin: {
-      type: Boolean,
-      default: false,
+    role: {
+      type: Number,
+      enum: [1, 2, 3],
+      default: 1,
     },
     wishlist: {
       type: [String],
