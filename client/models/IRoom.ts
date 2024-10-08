@@ -1,14 +1,14 @@
 export interface IRoom {
   room_id: string;
   hotel_id: string;
-  room_bumber: number;
+  room_number: string;
   room_type: string;
   title: string;
   description: string;
   price: number;
   max_people: number;
   quantity: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+  created_at: Date;
+  updated_at: Date;
   __v?: number;
 }

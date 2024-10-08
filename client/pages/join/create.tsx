@@ -11,14 +11,17 @@ import {
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { useCreateHotelMutation } from "../../services/userApi";
-import { IHotel, Address } from "../../models/IHotel";
+import { IHotel } from "../../models/IHotel";
 import withAuthentication from "../../components/withAuthentication";
 import { Layout } from "../../components/layout";
+
 type AddressData = {
-  name: string;
-  lat: number;
-  lng: number;
-  hotel_id: string;
+  address: {
+    name: string;
+    lat: number;
+    lng: number;
+    hotel_id: string;
+  };
 };
 
 const Create = () => {
@@ -44,8 +47,8 @@ const Create = () => {
     cheapest_price: 0,
     star_rating: 0,
     rooms: [],
-    created_at: new Date(), // Changed to Date object
-    updated_at: new Date(), // Changed to Date object
+    created_at: new Date(),
+    updated_at: new Date(),
   };
 
   const router = useRouter();
@@ -57,13 +60,10 @@ const Create = () => {
     });
   }
 
-  function updateAddressFields(Fields: Partial<AddressData>) {
+  function updateAddressFields(fields: Partial<AddressData>) {
     setData((prev) => ({
       ...prev,
-      address: {
-        ...prev.address,
-        ...Fields,
-      },
+      ...fields,
     }));
   }
 
@@ -81,22 +81,20 @@ const Create = () => {
       />,
       <AddressForm
         key={2}
-        name={data.address.name}
-        lat={data.address.lat}
-        lng={data.address.lng}
-        hotel_id={data.address.hotel_id}
+        address={data.address}
         updateFields={updateAddressFields}
       />,
       <ImagesForm key={3} {...data} updateFields={updateFields} />,
       <PublishedForm key={4} {...data} updateFields={updateFields} />,
     ]);
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isLastStep) return next();
     try {
       await createHotel(data).unwrap();
       await router.push("/join");
-      toast.success("Create to success");
+      toast.success("Created successfully");
     } catch (e) {
       console.log(e);
       toast.error("Something went wrong");
